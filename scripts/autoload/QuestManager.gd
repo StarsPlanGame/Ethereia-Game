@@ -145,8 +145,10 @@ func _grant_rewards(quest_id: String) -> void:
 			"item", "currency":
 				InventorySystem.add_item(reward.get("id"), reward.get("amount", 1))
 			"unlock":
-				# TODO: 解锁技能/系统
-				pass
+				# 解锁技能/系统：写入 skill_unlocked_<id> 剧情标记
+				var unlock_id: String = reward.get("id", "")
+				if unlock_id != "":
+					GameState.set_story_flag("skill_unlocked_" + unlock_id, true)
 
 func _trigger_next_quest(quest_id: String) -> void:
 	var q: Dictionary = DataManager.get_quest(quest_id)

@@ -97,14 +97,17 @@ func do_breakthrough() -> bool:
 	realm = Realm.QI_REFINING
 	realm_level = 1
 	spirit_qi = 0
-	# 突破后属性提升（数值来自 GDD §4）
+	# 突破后属性提升（路线图 §8 验收标准：max_hp+20, max_mp+50）
 	var stats: PlayerStats = get_parent().get_node("Stats")
-	stats.max_hp += 50
+	stats.max_hp += 20
 	stats.current_hp = stats.max_hp
-	stats.max_mp += 20
+	stats.max_mp += 50
 	stats.current_mp = stats.max_mp
 	stats.attack += 5
 	stats.defense += 3
+	# 通知 HUD 更新
+	EventBus.player_hp_changed.emit(stats.current_hp, stats.max_hp)
+	EventBus.player_mp_changed.emit(stats.current_mp, stats.max_mp)
 	EventBus.breakthrough_success.emit(REALM_NAMES[realm], realm_level)
 	EventBus.cultivation_changed.emit(REALM_NAMES[realm], realm_level, spirit_qi)
 	return true

@@ -25,6 +25,11 @@ const ATTACK_DURATION: float = 0.25  # 攻击判定持续时间
 const ATTACK_COOLDOWN: float = 0.4   # 攻击间隔
 const HITBOX_OFFSET: float = 30.0    # HitBox 距离玩家中心的偏移
 
+# ======== 灵气弹 ========
+const SPIRIT_BULLET_SCENE: PackedScene = preload("res://scenes/player/SpiritBullet.tscn")
+const SPIRIT_BULLET_SPAWN_OFFSET: float = 20.0  # 投射物出生点距玩家中心
+var skill_cooldown: float = 0.0
+
 # ======== 生命周期 ========
 func _ready() -> void:
 	if hurtbox != null:
@@ -35,10 +40,14 @@ func _ready() -> void:
 func _process(delta: float) -> void:
 	if attack_cooldown > 0:
 		attack_cooldown -= delta
+	if skill_cooldown > 0:
+		skill_cooldown -= delta
 	if GameState.is_paused or GameState.is_in_dialogue:
 		return
 	if Input.is_action_just_pressed("attack") and not is_attacking:
 		_perform_attack()
+	if Input.is_action_just_pressed("skill_1"):
+		_cast_spirit_bullet()
 
 # ======== 攻击 ========
 func _perform_attack() -> void:
@@ -105,14 +114,43 @@ func _on_hurtbox_area_entered(area: Area2D) -> void:
 	stats.take_damage(incoming_dmg)
 
 # ======== 技能 ========
-## 使用 skill_id 对应的技能
-## TODO: 待 SkillsSystem 与 PlayerAnimation 实现后完善
-func use_skill(skill_id: String) -> void:
-	var skill_data: Dictionary = DataManager.get_skill(skill_id)
-	if skill_data.is_empty():
-		push_warning("[PlayerCombat] 技能不存在: %s" % skill_id)
+## 发射灵气弹（按 K 键）
+func _cast_spirit_bullet() -> void:
+	# 检查技能是否已解锁
+	if not GameState.has_story_flag("skill_unlocked_skill_spirit_bullet"):
 		return
-	if not stats.use_mana(skill_data.get("mp_cost", 0)):
-		return  # 灵力不足
-	# TODO: 触发技能效果（投射物 / 范围伤害 / Buff）
-	EventBus.notification_shown.emit("使用技能: %s" % skill_data.get("name", skill_id))
+	if skill_cooldown > 0:
+		return
+	var skill_data: Dictionary = DataManager.get_skill("skill_spirit_bullet")
+	if skill_data.is_empty():
+		return
+	# 检查灵力
+	var mp_cost: int = skill_data.get("mp_cost", 5)
+	if not stats.use_mana(mp_cost):
+		EventBus.notification_shown.emit("灵力不足")
+		return
+	skill_cooldown = skill_data.get("cooldown", 1.0)
+	# 实例化投射物
+	var bullet: Area2D = SPIRIT_BULLET_SCENE.instantiate()
+	bullet.damage = calculate_damage(0, skill_data.get("damage", 15))
+	bullet.speed = skill_data.get("projectile_speed", 400)
+	bullet.max_range = skill_data.get("range", 300)
+	# 根据朝向设置方向与出生点
+	var dir: Vector2 = _facing_to_vector(parent.facing)
+	bullet.direction = dir
+	bullet.position = parent.global_position + dir * SPIRIT_BULLET_SPAWN_OFFSET
+	# 添加到玩家所在场景（玩家父节点）
+	parent.get_parent().add_child(bullet)
+
+## 朝向转单位向量
+func _facing_to_vector(facing: int) -> Vector2:
+	match facing:
+		PlayerController.Facing.RIGHT:
+			return Vector2.RIGHT
+		PlayerController.Facing.LEFT:
+			return Vector2.LEFT
+		PlayerController.Facing.UP:
+			return Vector2.UP
+		PlayerController.Facing.DOWN:
+			return Vector2.DOWN
+	return Vector2.RIGHT
