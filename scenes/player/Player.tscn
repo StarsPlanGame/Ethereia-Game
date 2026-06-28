@@ -1,10 +1,11 @@
-[gd_scene load_steps=6 format=3]
+[gd_scene load_steps=7 format=3]
 
 [ext_resource type="Script" path="res://scripts/player/PlayerController.gd" id="1_ctrl"]
 [ext_resource type="Script" path="res://scripts/player/PlayerStats.gd" id="2_stats"]
 [ext_resource type="Script" path="res://scripts/player/PlayerCombat.gd" id="3_combat"]
 [ext_resource type="Script" path="res://scripts/player/PlayerInteraction.gd" id="4_inter"]
 [ext_resource type="Script" path="res://scripts/player/PlayerCultivation.gd" id="5_cult"]
+[ext_resource type="Script" path="res://scripts/player/PlayerAnimation.gd" id="6_anim"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_body"]
 size = Vector2(28, 36)
@@ -41,6 +42,9 @@ script = ExtResource("4_inter")
 
 [node name="Cultivation" type="Node" parent="."]
 script = ExtResource("5_cult")
+
+[node name="Animation" type="Node" parent="."]
+script = ExtResource("6_anim")
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="."]
 

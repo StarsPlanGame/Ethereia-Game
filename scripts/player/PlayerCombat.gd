@@ -7,6 +7,9 @@
 extends Node
 class_name PlayerCombat
 
+# 统一伤害计算器
+const _DmgCalc = preload("res://scripts/core/DamageCalculator.gd")
+
 @onready var parent: CharacterBody2D = get_parent()
 @onready var stats: PlayerStats = parent.get_node("Stats")
 @onready var hitbox: Area2D = parent.get_node_or_null("HitBox")
@@ -81,9 +84,10 @@ func _update_hitbox_position() -> void:
 		PlayerController.Facing.UP:
 			hitbox_shape.position = Vector2(0, -HITBOX_OFFSET)
 
-## 计算伤害：max(1, atk + skill_dmg - def)
+## 计算伤害（统一通过 DamageCalculator）
+## 攻击方负责计算最终伤害，被攻击方 take_damage 只扣血
 func calculate_damage(target_defense: int, skill_damage: int = 0) -> int:
-	return max(1, stats.attack + skill_damage - target_defense)
+	return _DmgCalc.get_damage(stats.attack, target_defense, skill_damage)
 
 # ======== HitBox 命中敌人 ========
 func _on_hitbox_area_entered(area: Area2D) -> void:
@@ -98,20 +102,30 @@ func _on_hitbox_area_entered(area: Area2D) -> void:
 	var enemy: Node = area.get_parent()
 	if enemy == null or not enemy.has_method("take_damage"):
 		return
-	var dmg: int = calculate_damage(enemy.defense if "defense" in enemy else 0)
-	enemy.take_damage(dmg)
+	# 统一伤害计算：玩家攻击力 - 敌人防御力（基础技能伤害 0）
+	var enemy_def: int = enemy.defense if "defense" in enemy else 0
+	var dmg_info: Dictionary = _DmgCalc.compute_damage(stats.attack, enemy_def, 0)
+	enemy.take_damage(dmg_info.damage)
 
 # ======== 受击 ========
 func _on_hurtbox_area_entered(area: Area2D) -> void:
 	# 命中本玩家的 area 应在 enemy_hitbox 层（layer 9）
 	if not area.is_in_group("enemy_hitbox"):
 		return
-	# 从 enemy_hitbox 节点向上找到敌人节点，取其攻击力
+	# 从 enemy_hitbox 节点向上找到敌人节点
 	var enemy: Node = area.get_parent()
-	var incoming_dmg: int = 10
-	if enemy != null and "attack" in enemy:
-		incoming_dmg = enemy.attack
-	stats.take_damage(incoming_dmg)
+	if enemy == null or not ("attack" in enemy):
+		return
+	# 统一伤害计算：敌人攻击力 - 玩家防御力
+	# 应用敌人的暴击/方差参数（数据驱动）
+	var enemy_crit: float = enemy.crit_chance if "crit_chance" in enemy else 0.0
+	var enemy_crit_mult: float = enemy.crit_multiplier if "crit_multiplier" in enemy else 1.5
+	var enemy_variance: float = enemy.damage_variance if "damage_variance" in enemy else 0.0
+	var dmg_info: Dictionary = _DmgCalc.compute_damage(
+		enemy.attack, stats.defense, 0,
+		enemy_crit, enemy_crit_mult, enemy_variance
+	)
+	stats.take_damage(dmg_info.damage)
 
 # ======== 技能 ========
 ## 发射灵气弹（按 K 键）
@@ -132,7 +146,8 @@ func _cast_spirit_bullet() -> void:
 	skill_cooldown = skill_data.get("cooldown", 1.0)
 	# 实例化投射物
 	var bullet: Area2D = SPIRIT_BULLET_SCENE.instantiate()
-	bullet.damage = calculate_damage(0, skill_data.get("damage", 15))
+	# bullet.damage 存储"攻击者攻击力 + 技能伤害"（命中时再减敌防）
+	bullet.damage = stats.attack + skill_data.get("damage", 15)
 	bullet.speed = skill_data.get("projectile_speed", 400)
 	bullet.max_range = skill_data.get("range", 300)
 	# 根据朝向设置方向与出生点

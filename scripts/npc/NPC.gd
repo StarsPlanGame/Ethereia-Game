@@ -14,6 +14,9 @@ class_name NPC
 ## 朝向（用于精灵翻转）
 @export var facing_left: bool = false
 
+# 占位纹理生成器（使用 const preload 确保在任何模式下都可加载）
+const _PTG = preload("res://scripts/core/PlaceholderTextureGenerator.gd")
+
 @onready var sprite: Sprite2D = $Sprite2D
 @onready var name_label: Label = $NameLabel
 
@@ -28,6 +31,9 @@ func _ready() -> void:
 			# 初始化关系值（仅首次）
 			if RelationshipManager.get_relationship(npc_id) == 0:
 				RelationshipManager.set_relationship(npc_id, data.get("initial_relationship", 0))
+	# 占位纹理（美术资源缺失时自动生成绿色方块）
+	if sprite and sprite.texture == null:
+		sprite.texture = _PTG.get_for_role("npc")
 	# 朝向
 	if sprite:
 		sprite.flip_h = facing_left

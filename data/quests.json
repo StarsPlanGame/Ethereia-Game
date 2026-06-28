@@ -112,5 +112,29 @@
     "karma_effects": {},
     "relationship_effects": {},
     "auto_complete": true
+  },
+  {
+    "id": "quest_006",
+    "name": "汇报青萝",
+    "description": "突破炼气一层后，回青石镇向沈青萝汇报修行进展。",
+    "state": "locked",
+    "objectives": [
+      {
+        "id": "talk_to_qingluo",
+        "type": "talk_to_npc",
+        "target_id": "npc_shen_qingluo",
+        "required": 1,
+        "current": 0,
+        "description": "与沈青萝对话 0/1"
+      }
+    ],
+    "rewards": [
+      { "type": "item", "id": "currency_spirit_stone", "amount": 10 },
+      { "type": "item", "id": "item_health_pill", "amount": 3 }
+    ],
+    "next_quest_id": "",
+    "story_flags": { "reported_to_qingluo": true },
+    "karma_effects": {},
+    "relationship_effects": { "shen_qingluo": 15 }
   }
 ]

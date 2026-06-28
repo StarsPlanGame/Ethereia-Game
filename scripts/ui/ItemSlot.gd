@@ -38,7 +38,6 @@ func _type_display(type_str: String) -> String:
 			return type_str
 
 func _gui_input(event: InputEvent) -> void:
-	# 双击使用消耗品
+	# 双击使用消耗品（通知由 InventorySystem.use_item 统一发射）
 	if event is InputEventMouseButton and event.pressed and event.double_click:
-		if InventorySystem.use_item(item_id):
-			EventBus.notification_shown.emit("使用了 %s" % name_label.text)
+		InventorySystem.use_item(item_id)

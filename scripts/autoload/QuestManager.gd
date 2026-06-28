@@ -37,6 +37,7 @@ func _ready() -> void:
 	EventBus.enemy_killed.connect(_on_enemy_killed)
 	EventBus.area_entered.connect(_on_area_entered)
 	EventBus.dialogue_finished.connect(_on_dialogue_finished)
+	EventBus.npc_talked.connect(_on_npc_talked)
 	EventBus.cultivation_changed.connect(_on_cultivation_changed)
 	# 从 DataManager 初始化所有任务为数据表中的初始状态
 	_initialize_quest_states()
@@ -186,8 +187,12 @@ func _on_area_entered(area_id: String) -> void:
 	_update_objectives_by_type("enter_area", area_id, 1)
 
 func _on_dialogue_finished(_dialogue_id: String) -> void:
-	# talk_to_npc 类型目标需要更精确匹配 NPC ID，留到对话系统接入后完善
+	# talk_to_npc 类型目标改由 _on_npc_talked 处理（携带 npc_id 更精确）
 	pass
+
+## 玩家与 NPC 完成对话时触发，推进 talk_to_npc 类型目标
+func _on_npc_talked(npc_id: String) -> void:
+	_update_objectives_by_type("talk_to_npc", npc_id, 1)
 
 func _on_cultivation_changed(realm: String, level: int, _qi: int) -> void:
 	_update_objectives_by_type("reach_cultivation", "%s_%d" % [realm, level], 1)

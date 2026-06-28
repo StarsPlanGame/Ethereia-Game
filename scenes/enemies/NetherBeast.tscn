@@ -8,8 +8,3 @@ death_flag = "boss_defeated"
 
 [node name="Sprite2D" parent="." index="0"]
 modulate = Color(0.2, 0.4, 0.7, 1)
-
-[node name="AI" parent="." index="5"]
-chase_range = 400.0
-attack_range = 50.0
-attack_cooldown = 2.0

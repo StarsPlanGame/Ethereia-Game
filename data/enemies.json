@@ -15,6 +15,11 @@
     "detection_range": 200,
     "attack_range": 30,
     "attack_cooldown": 1.5,
+    "patrol_radius": 80,
+    "return_range": 400,
+    "crit_chance": 0.05,
+    "crit_multiplier": 1.5,
+    "damage_variance": 0.1,
     "sprite": "res://assets/sprites/enemies/mountain_wolf.png"
   },
   {
@@ -34,6 +39,11 @@
     "detection_range": 250,
     "attack_range": 35,
     "attack_cooldown": 1.2,
+    "patrol_radius": 100,
+    "return_range": 450,
+    "crit_chance": 0.1,
+    "crit_multiplier": 1.6,
+    "damage_variance": 0.15,
     "sprite": "res://assets/sprites/enemies/mutant_wolf.png"
   },
   {
@@ -53,6 +63,11 @@
     "detection_range": 400,
     "attack_range": 50,
     "attack_cooldown": 2.0,
+    "patrol_radius": 60,
+    "return_range": 9999,
+    "crit_chance": 0.15,
+    "crit_multiplier": 2.0,
+    "damage_variance": 0.2,
     "is_boss": true,
     "complete_quest_on_death": "quest_004",
     "sprite": "res://assets/sprites/enemies/nether_beast.png"

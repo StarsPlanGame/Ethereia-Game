@@ -7,8 +7,3 @@ enemy_id = "enemy_mutant_wolf"
 
 [node name="Sprite2D" parent="." index="0"]
 modulate = Color(0.4, 0.3, 0.6, 1)
-
-[node name="AI" parent="." index="5"]
-chase_range = 250.0
-attack_range = 35.0
-attack_cooldown = 1.2

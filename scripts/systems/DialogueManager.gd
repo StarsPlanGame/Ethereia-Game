@@ -105,12 +105,17 @@ func end_dialogue() -> void:
 	if not _is_active:
 		return
 	var ended_id: String = _current_dialogue_id
+	var talked_npc_id: String = _current_npc_id
 	_current_dialogue_id = ""
 	_current_node = {}
 	_current_npc_id = ""
 	_is_active = false
 	GameState.is_in_dialogue = false
 	EventBus.dialogue_finished.emit(ended_id)
+	# 发射 npc_talked 信号，用于推进 talk_to_npc 任务目标
+	# 仅在有有效 npc_id 时发射
+	if talked_npc_id != "":
+		EventBus.npc_talked.emit(talked_npc_id)
 	dialogue_ended.emit(ended_id)
 
 # ======== 内部实现 ========

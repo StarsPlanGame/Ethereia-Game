@@ -7,8 +7,3 @@ enemy_id = "enemy_mountain_wolf"
 
 [node name="Sprite2D" parent="." index="0"]
 modulate = Color(0.7, 0.6, 0.5, 1)
-
-[node name="AI" parent="." index="5"]
-chase_range = 200.0
-attack_range = 30.0
-attack_cooldown = 1.5

@@ -13,11 +13,15 @@ class_name PlayerController
 @onready var interaction: Node = $Interaction
 @onready var cultivation: Node = $Cultivation
 @onready var anim_player: AnimationPlayer = $AnimationPlayer
+@onready var anim: Node = $Animation
 @onready var sprite: Sprite2D = $Sprite2D
 
 # ======== 移动锁定（引用计数，多个系统可同时锁）========
 var _lock_count: int = 0
 var _move_locks: Dictionary = {}  # key: 锁定来源标识，便于调试
+
+# 占位纹理生成器（使用 const preload 确保在任何模式下都可加载）
+const _PTG = preload("res://scripts/core/PlaceholderTextureGenerator.gd")
 
 # ======== 朝向 ========
 enum Facing { LEFT, RIGHT, UP, DOWN }
@@ -30,6 +34,9 @@ func _ready() -> void:
 	EventBus.scene_changed.connect(_on_scene_changed)
 	# 对话开始时清除交互目标，避免对话结束后立即再次触发
 	EventBus.dialogue_started.connect(_on_dialogue_started)
+	# 占位纹理（美术资源缺失时自动生成蓝色方块）
+	if sprite != null and sprite.texture == null:
+		sprite.texture = _PTG.get_for_role("player")
 
 func _physics_process(_delta: float) -> void:
 	if is_locked():
@@ -60,8 +67,11 @@ func _update_facing(v: Vector2) -> void:
 		facing = Facing.DOWN if v.y > 0 else Facing.UP
 
 func _update_animation(input_vec: Vector2) -> void:
-	# TODO: 接入美术资源后切换动画
-	# 简化：根据朝向翻转 sprite
+	# 委托给 PlayerAnimation 组件处理程序化占位动画
+	if anim != null and anim.has_method("update"):
+		anim.update(facing, input_vec != Vector2.ZERO)
+		return
+	# 降级：直接翻转 sprite（组件缺失时）
 	if facing == Facing.LEFT:
 		sprite.flip_h = true
 	elif facing == Facing.RIGHT:

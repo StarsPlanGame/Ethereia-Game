@@ -18,9 +18,10 @@ class_name PlayerStats
 @export var move_speed: float = 150.0
 
 # ======== 接口 ========
+## 受到最终伤害（防御已由攻击方通过 DamageCalculator 计算时扣除）
+## dmg 为已结算的最终伤害值
 func take_damage(dmg: int) -> void:
-	var actual: int = max(1, dmg - defense)
-	current_hp = max(0, current_hp - actual)
+	current_hp = max(0, current_hp - dmg)
 	EventBus.player_hp_changed.emit(current_hp, max_hp)
 	if current_hp <= 0:
 		EventBus.player_died.emit()

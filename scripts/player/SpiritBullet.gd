@@ -7,10 +7,13 @@
 extends Area2D
 class_name SpiritBullet
 
+# 统一伤害计算器
+const _DmgCalc = preload("res://scripts/core/DamageCalculator.gd")
+
 # ======== 参数（由发射方设置）========
 var direction: Vector2 = Vector2.RIGHT  # 飞行方向（已归一化）
 var speed: float = 400.0                # 飞行速度
-var damage: int = 15                    # 伤害值（含攻击者攻击力）
+var damage: int = 15                    # 攻击者攻击力 + 技能伤害（命中时再减敌防）
 var max_range: float = 300.0            # 最大射程
 
 var _traveled: float = 0.0              # 已飞行距离
@@ -40,7 +43,7 @@ func _on_body_entered(body: Node) -> void:
 		return
 	# 命中敌人 CharacterBody
 	if body.has_method("take_damage") and body.is_in_group("enemy"):
-		body.take_damage(damage)
+		_apply_damage_to_enemy(body)
 		queue_free()
 
 func _on_area_entered(area: Area2D) -> void:
@@ -48,5 +51,11 @@ func _on_area_entered(area: Area2D) -> void:
 	if area.is_in_group("enemy_hurtbox"):
 		var enemy: Node = area.get_parent()
 		if enemy != null and enemy.has_method("take_damage"):
-			enemy.take_damage(damage)
+			_apply_damage_to_enemy(enemy)
 		queue_free()
+
+## 统一伤害计算：投射物攻击力 - 敌人防御力
+func _apply_damage_to_enemy(enemy: Node) -> void:
+	var enemy_def: int = enemy.defense if "defense" in enemy else 0
+	var final_dmg: int = _DmgCalc.get_damage(damage, enemy_def, 0)
+	enemy.take_damage(final_dmg)

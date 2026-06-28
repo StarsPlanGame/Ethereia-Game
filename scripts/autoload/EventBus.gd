@@ -29,6 +29,8 @@ signal area_entered(area_id: String)
 # ======== 对话相关 ========
 signal dialogue_started(dialogue_id: String)
 signal dialogue_finished(dialogue_id: String)
+## 玩家与 NPC 完成一次对话（用于 talk_to_npc 任务目标推进）
+signal npc_talked(npc_id: String)
 
 # ======== 修炼相关 ========
 signal cultivation_changed(realm: String, level: int, qi: int)
