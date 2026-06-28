@@ -1,0 +1,107 @@
+[
+  {
+    "id": "item_spirit_grass",
+    "name": "灵草",
+    "description": "生长在山林深处的灵气草药，散发着淡淡荧光。",
+    "type": "material",
+    "stackable": true,
+    "max_stack": 99,
+    "value": 10,
+    "effects": [],
+    "icon": "res://assets/icons/item_spirit_grass.png"
+  },
+  {
+    "id": "item_wolf_fang",
+    "name": "狼牙",
+    "description": "山狼的利齿，可作法器辅助材料。",
+    "type": "material",
+    "stackable": true,
+    "max_stack": 50,
+    "value": 5,
+    "effects": [],
+    "icon": "res://assets/icons/item_wolf_fang.png"
+  },
+  {
+    "id": "item_qi_recovery_pill",
+    "name": "回气丹",
+    "description": "服用后恢复少量灵力。",
+    "type": "consumable",
+    "stackable": true,
+    "max_stack": 30,
+    "value": 50,
+    "effects": [
+      { "type": "heal_mp", "amount": 20 }
+    ],
+    "icon": "res://assets/icons/item_qi_recovery_pill.png"
+  },
+  {
+    "id": "item_health_pill",
+    "name": "回血丹",
+    "description": "服用后恢复少量气血。",
+    "type": "consumable",
+    "stackable": true,
+    "max_stack": 30,
+    "value": 50,
+    "effects": [
+      { "type": "heal_hp", "amount": 30 }
+    ],
+    "icon": "res://assets/icons/item_health_pill.png"
+  },
+  {
+    "id": "item_nether_jade",
+    "name": "冥天玉",
+    "description": "残缺的玄色玉珏，触之冰冷，似有冥气流转。能令凡人感知天地灵气。",
+    "type": "quest",
+    "stackable": false,
+    "max_stack": 1,
+    "value": 0,
+    "effects": [
+      { "type": "unlock_cultivation" }
+    ],
+    "icon": "res://assets/icons/item_nether_jade.png"
+  },
+  {
+    "id": "item_blood_essence",
+    "name": "兽血精华",
+    "description": "提炼自强大妖兽的精血，蕴含狂暴灵力。",
+    "type": "material",
+    "stackable": true,
+    "max_stack": 20,
+    "value": 100,
+    "effects": [],
+    "icon": "res://assets/icons/item_blood_essence.png"
+  },
+  {
+    "id": "item_medicine_recipe",
+    "name": "采药手册",
+    "description": "沈青萝赠予的采药手册，记载了山林常见灵草的位置。",
+    "type": "quest",
+    "stackable": false,
+    "max_stack": 1,
+    "value": 0,
+    "effects": [],
+    "icon": "res://assets/icons/item_medicine_recipe.png"
+  },
+  {
+    "id": "item_town_token",
+    "name": "镇民信物",
+    "description": "镇民感谢你拯救青石镇赠予的信物。",
+    "type": "quest",
+    "stackable": false,
+    "max_stack": 1,
+    "value": 0,
+    "effects": [],
+    "icon": "res://assets/icons/item_town_token.png"
+  },
+  {
+    "id": "currency_spirit_stone",
+    "name": "灵石",
+    "description": "修士通行货币，蕴含微量灵气。",
+    "type": "currency",
+    "stackable": true,
+    "max_stack": 9999,
+    "value": 1,
+    "effects": [],
+    "icon": "res://assets/icons/currency_spirit_stone.png"
+  }
+]

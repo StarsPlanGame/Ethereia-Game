@@ -1,0 +1,115 @@
+[
+  {
+    "id": "quest_001",
+    "name": "采药之始",
+    "description": "沈青萝请你帮忙采集 3 株灵草。",
+    "state": "available",
+    "objectives": [
+      {
+        "id": "collect_grass",
+        "type": "collect_item",
+        "target_id": "item_spirit_grass",
+        "required": 3,
+        "current": 0,
+        "description": "采集灵草 0/3"
+      }
+    ],
+    "rewards": [
+      { "type": "item", "id": "currency_spirit_stone", "amount": 5 },
+      { "type": "item", "id": "item_health_pill", "amount": 2 }
+    ],
+    "next_quest_id": "quest_002",
+    "story_flags": {},
+    "karma_effects": {},
+    "relationship_effects": { "shen_qingluo": 10 }
+  },
+  {
+    "id": "quest_002",
+    "name": "山林异动",
+    "description": "镇民报告山林出现异常，请前往调查。",
+    "state": "locked",
+    "objectives": [
+      {
+        "id": "enter_forest",
+        "type": "enter_area",
+        "target_id": "qing_shi_forest",
+        "required": 1,
+        "current": 0,
+        "description": "进入青石山林"
+      }
+    ],
+    "rewards": [],
+    "next_quest_id": "quest_003",
+    "story_flags": { "heard_forest_warning": true },
+    "karma_effects": {},
+    "relationship_effects": {}
+  },
+  {
+    "id": "quest_003",
+    "name": "冥墟古观",
+    "description": "在山林深处发现一座废弃古观，似乎隐藏着某种秘密。",
+    "state": "locked",
+    "objectives": [
+      {
+        "id": "enter_temple",
+        "type": "enter_area",
+        "target_id": "nether_temple",
+        "required": 1,
+        "current": 0,
+        "description": "进入冥墟古观"
+      }
+    ],
+    "rewards": [],
+    "next_quest_id": "quest_004",
+    "story_flags": { "found_temple": true },
+    "karma_effects": {},
+    "relationship_effects": {}
+  },
+  {
+    "id": "quest_004",
+    "name": "冥天玉",
+    "description": "在古观中找到残缺的冥天玉。",
+    "state": "locked",
+    "objectives": [
+      {
+        "id": "obtain_jade",
+        "type": "obtain_item",
+        "target_id": "item_nether_jade",
+        "required": 1,
+        "current": 0,
+        "description": "获得冥天玉"
+      }
+    ],
+    "rewards": [
+      { "type": "unlock", "id": "cultivation", "amount": 1 }
+    ],
+    "next_quest_id": "quest_005",
+    "story_flags": { "has_nether_jade": true },
+    "karma_effects": { "hidden_jade": 1 },
+    "relationship_effects": {}
+  },
+  {
+    "id": "quest_005",
+    "name": "突破炼气",
+    "description": "通过打坐积累灵气，尝试突破到炼气一层。",
+    "state": "locked",
+    "objectives": [
+      {
+        "id": "reach_qi_1",
+        "type": "reach_cultivation",
+        "target_id": "炼气_1",
+        "required": 1,
+        "current": 0,
+        "description": "突破到炼气一层"
+      }
+    ],
+    "rewards": [
+      { "type": "item", "id": "item_qi_recovery_pill", "amount": 3 },
+      { "type": "unlock", "id": "skill_spirit_bullet", "amount": 1 }
+    ],
+    "next_quest_id": "",
+    "story_flags": { "entered_cultivation": true },
+    "karma_effects": {},
+    "relationship_effects": {}
+  }
+]

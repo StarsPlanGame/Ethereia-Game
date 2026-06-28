@@ -1,0 +1,28 @@
+[
+  {
+    "id": "skill_spirit_bullet",
+    "name": "灵气弹",
+    "description": "凝聚灵气形成弹丸，远程攻击敌人。",
+    "type": "active",
+    "mp_cost": 5,
+    "cooldown": 1.0,
+    "damage": 15,
+    "range": 300,
+    "projectile_speed": 400,
+    "unlock_condition": "qi_refining_1",
+    "icon": "res://assets/icons/skill_spirit_bullet.png"
+  },
+  {
+    "id": "skill_basic_strike",
+    "name": "基础斩击",
+    "description": "凡人时期的近战攻击。",
+    "type": "active",
+    "mp_cost": 0,
+    "cooldown": 0.4,
+    "damage": 5,
+    "range": 30,
+    "projectile_speed": 0,
+    "unlock_condition": "default",
+    "icon": "res://assets/icons/skill_basic_strike.png"
+  }
+]

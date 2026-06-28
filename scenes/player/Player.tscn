@@ -1,0 +1,63 @@
+[gd_scene load_steps=6 format=3]
+
+[ext_resource type="Script" path="res://scripts/player/PlayerController.gd" id="1_ctrl"]
+[ext_resource type="Script" path="res://scripts/player/PlayerStats.gd" id="2_stats"]
+[ext_resource type="Script" path="res://scripts/player/PlayerCombat.gd" id="3_combat"]
+[ext_resource type="Script" path="res://scripts/player/PlayerInteraction.gd" id="4_inter"]
+[ext_resource type="Script" path="res://scripts/player/PlayerCultivation.gd" id="5_cult"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_body"]
+size = Vector2(28, 36)
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_interact"]
+radius = 60.0
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_hurtbox"]
+size = Vector2(28, 36)
+
+[node name="Player" type="CharacterBody2D"]
+collision_layer = 1
+collision_mask = 0
+script = ExtResource("1_ctrl")
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+centered = false
+offset = Vector2(-16, -36)
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+shape = SubResource("RectangleShape2D_body")
+
+[node name="Stats" type="Node" parent="."]
+script = ExtResource("2_stats")
+
+[node name="Combat" type="Node" parent="."]
+script = ExtResource("3_combat")
+
+[node name="Interaction" type="Node" parent="."]
+script = ExtResource("4_inter")
+
+[node name="Cultivation" type="Node" parent="."]
+script = ExtResource("5_cult")
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="."]
+
+[node name="InteractionArea" type="Area2D" parent="."]
+collision_layer = 0
+collision_mask = 16
+
+[node name="InteractionShape" type="CollisionShape2D" parent="InteractionArea"]
+shape = SubResource("CircleShape2D_interact")
+
+[node name="HitBox" type="Area2D" parent="."]
+collision_layer = 256
+collision_mask = 64
+monitoring = false
+
+[node name="HitBoxShape" type="CollisionShape2D" parent="HitBox"]
+
+[node name="HurtBox" type="Area2D" parent="."]
+collision_layer = 32
+collision_mask = 512
+
+[node name="HurtBoxShape" type="CollisionShape2D" parent="HurtBox"]
+shape = SubResource("RectangleShape2D_hurtbox")

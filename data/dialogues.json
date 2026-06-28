@@ -1,0 +1,100 @@
+{
+  "dlg_shen_qingluo_first_meet": {
+    "id": "dlg_shen_qingluo_first_meet",
+    "npc_id": "npc_shen_qingluo",
+    "condition": {
+      "type": "quest_state",
+      "quest_id": "quest_001",
+      "state": "available"
+    },
+    "nodes": [
+      {
+        "id": "start",
+        "speaker": "沈青萝",
+        "text": "孩子，你来了。山林深处近来不太平，我需要一些灵草炼制丹药，能否帮我采集 3 株？",
+        "next": "accept_choice"
+      },
+      {
+        "id": "accept_choice",
+        "speaker": "",
+        "text": "",
+        "choices": [
+          { "text": "我愿意帮忙", "next": "accept", "effects": [] },
+          { "text": "我现在还有事", "next": "decline", "effects": [] }
+        ]
+      },
+      {
+        "id": "accept",
+        "speaker": "沈青萝",
+        "text": "好孩子，灵草多生长在山林背阴处，注意安全。",
+        "next": "end_accept",
+        "effects": [
+          { "type": "start_quest", "quest_id": "quest_001" }
+        ]
+      },
+      {
+        "id": "decline",
+        "speaker": "沈青萝",
+        "text": "无妨，那便等你方便时再来。",
+        "next": "end_decline",
+        "effects": []
+      },
+      {
+        "id": "end_accept",
+        "speaker": "",
+        "text": "",
+        "is_end": true
+      },
+      {
+        "id": "end_decline",
+        "speaker": "",
+        "text": "",
+        "is_end": true
+      }
+    ]
+  },
+  "dlg_han_zhaoye_first_meet": {
+    "id": "dlg_han_zhaoye_first_meet",
+    "npc_id": "npc_han_zhaoye",
+    "condition": {
+      "type": "always"
+    },
+    "nodes": [
+      {
+        "id": "start",
+        "speaker": "韩昭业",
+        "text": "镇外来的？看着倒是不像凡人...罢了，铁匠铺就在这，需要什么自便。",
+        "next": "end",
+        "effects": []
+      },
+      {
+        "id": "end",
+        "speaker": "",
+        "text": "",
+        "is_end": true
+      }
+    ]
+  },
+  "dlg_li_shen_first_meet": {
+    "id": "dlg_li_shen_first_meet",
+    "npc_id": "npc_li_shen",
+    "condition": {
+      "type": "always"
+    },
+    "nodes": [
+      {
+        "id": "start",
+        "speaker": "李婶",
+        "text": "哎呀小客人，需要些什么？杂货铺的东西虽不多，但都是实惠货。",
+        "next": "end",
+        "effects": []
+      },
+      {
+        "id": "end",
+        "speaker": "",
+        "text": "",
+        "is_end": true
+      }
+    ]
+  }
+}

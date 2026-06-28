@@ -1,0 +1,52 @@
+[
+  {
+    "id": "npc_shen_qingluo",
+    "name": "沈青萝",
+    "title": "青石镇采药人",
+    "description": "中年女修，温和善良，精通草药。隐居青石镇的修仙者，因仙途断绝而在此终老。",
+    "location": "qing_shi_town",
+    "initial_relationship": 20,
+    "is_quest_giver": true,
+    "sprite": "res://assets/sprites/npcs/shen_qingluo.png"
+  },
+  {
+    "id": "npc_han_zhaoye",
+    "name": "韩昭业",
+    "title": "镇上铁匠",
+    "description": "性格豪爽的中年汉子，祖上是修仙者，留下半卷残书。",
+    "location": "qing_shi_town",
+    "initial_relationship": 0,
+    "is_quest_giver": false,
+    "sprite": "res://assets/sprites/npcs/han_zhaoye.png"
+  },
+  {
+    "id": "npc_li_shen",
+    "name": "李婶",
+    "title": "杂货铺老板娘",
+    "description": "热心肠的中年妇人，掌管镇上唯一杂货铺。",
+    "location": "qing_shi_town",
+    "initial_relationship": 10,
+    "is_quest_giver": false,
+    "sprite": "res://assets/sprites/npcs/li_shen.png"
+  },
+  {
+    "id": "npc_zhao_zhanggui",
+    "name": "赵掌柜",
+    "title": "客栈掌柜",
+    "description": "见多识广的客栈掌柜，知晓许多山林传闻。",
+    "location": "qing_shi_town",
+    "initial_relationship": 0,
+    "is_quest_giver": false,
+    "sprite": "res://assets/sprites/npcs/zhao_zhanggui.png"
+  },
+  {
+    "id": "npc_xiao_he",
+    "name": "小禾",
+    "title": "镇上少女",
+    "description": "活泼的少女，常在镇口玩耍，是镇上的消息灵通人士。",
+    "location": "qing_shi_town",
+    "initial_relationship": 5,
+    "is_quest_giver": false,
+    "sprite": "res://assets/sprites/npcs/xiao_he.png"
+  }
+]

@@ -1,0 +1,59 @@
+[
+  {
+    "id": "enemy_mountain_wolf",
+    "name": "山狼",
+    "description": "栖息在青石山林的野兽，受异变影响变得凶猛。",
+    "hp": 30,
+    "attack": 8,
+    "defense": 2,
+    "move_speed": 100,
+    "exp": 5,
+    "drops": [
+      { "item_id": "item_wolf_fang", "chance": 0.6, "amount": 1 }
+    ],
+    "ai_type": "melee_chase",
+    "detection_range": 200,
+    "attack_range": 30,
+    "attack_cooldown": 1.5,
+    "sprite": "res://assets/sprites/enemies/mountain_wolf.png"
+  },
+  {
+    "id": "enemy_mutant_wolf",
+    "name": "异化山狼",
+    "description": "受冥气侵蚀发生异变的山狼，体型更大，攻击性更强。",
+    "hp": 60,
+    "attack": 14,
+    "defense": 4,
+    "move_speed": 130,
+    "exp": 15,
+    "drops": [
+      { "item_id": "item_wolf_fang", "chance": 0.8, "amount": 2 },
+      { "item_id": "item_blood_essence", "chance": 0.2, "amount": 1 }
+    ],
+    "ai_type": "melee_chase",
+    "detection_range": 250,
+    "attack_range": 35,
+    "attack_cooldown": 1.2,
+    "sprite": "res://assets/sprites/enemies/mutant_wolf.png"
+  },
+  {
+    "id": "enemy_nether_beast",
+    "name": "冥纹兽",
+    "description": "镇守冥墟古观的异兽，浑身布满幽蓝冥纹。",
+    "hp": 200,
+    "attack": 25,
+    "defense": 8,
+    "move_speed": 90,
+    "exp": 100,
+    "drops": [
+      { "item_id": "item_blood_essence", "chance": 1.0, "amount": 3 },
+      { "item_id": "item_nether_jade", "chance": 1.0, "amount": 1 }
+    ],
+    "ai_type": "boss",
+    "detection_range": 400,
+    "attack_range": 50,
+    "attack_cooldown": 2.0,
+    "is_boss": true,
+    "sprite": "res://assets/sprites/enemies/nether_beast.png"
+  }
+]

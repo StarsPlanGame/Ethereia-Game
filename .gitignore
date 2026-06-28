@@ -2,7 +2,28 @@
 .godot/
 /android/
 
+# Godot native builds / exports
+/builds/
+/export/
+*.exe
+*.pck
+*.zip
+export_presets.cfg
+
+# Godot editor (don't commit the binary)
+Godot*.exe
+
 # other
 .trae/
 docs/
 .vscode/
+
+# OS files
+.DS_Store
+Thumbs.db
+desktop.ini
+
+# IDE / Editor
+.idea/
+*.swp
+*.swo
