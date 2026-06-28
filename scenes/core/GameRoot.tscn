@@ -1,4 +1,4 @@
-[gd_scene load_steps=9 format=3]
+[gd_scene load_steps=10 format=3]
 
 [ext_resource type="Script" path="res://scripts/core/GameRoot.gd" id="1_root"]
 [ext_resource type="PackedScene" path="res://scenes/player/Player.tscn" id="2_player"]
@@ -7,6 +7,7 @@
 [ext_resource type="PackedScene" path="res://scenes/ui/QuestPanel.tscn" id="5_quest"]
 [ext_resource type="PackedScene" path="res://scenes/ui/InventoryPanel.tscn" id="6_inv"]
 [ext_resource type="PackedScene" path="res://scenes/ui/CultivationPanel.tscn" id="7_cult"]
+[ext_resource type="PackedScene" path="res://scenes/ui/PauseMenu.tscn" id="8_pause"]
 
 [node name="GameRoot" type="Node2D"]
 script = ExtResource("1_root")
@@ -77,3 +78,5 @@ visible = false
 [node name="InventoryPanel" parent="UILayer" instance=ExtResource("6_inv")]
 
 [node name="CultivationPanel" parent="UILayer" instance=ExtResource("7_cult")]
+
+[node name="PauseMenu" parent="UILayer" instance=ExtResource("8_pause")]

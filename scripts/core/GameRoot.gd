@@ -16,6 +16,8 @@ func _ready() -> void:
 	SceneLoader.current_scene_container = scene_container
 	# 监听场景切换完成，玩家在新场景中显示
 	EventBus.scene_changed.connect(_on_scene_changed)
+	# 监听读档信号，分发玩家数据
+	EventBus.game_loaded.connect(_on_game_loaded)
 	# 默认加载青石镇（无存档时）
 	if not SaveManager.has_save(1):
 		SceneLoader.change_scene("qing_shi_town", "spawn_default")
@@ -26,3 +28,19 @@ func _ready() -> void:
 
 func _on_scene_changed(_scene_id: String) -> void:
 	player.visible = true
+
+## 读档后分发玩家数据（位置/属性/修炼）
+func _on_game_loaded(_slot_id: int) -> void:
+	var data: Dictionary = SaveManager.pop_pending_player_data()
+	if data.is_empty():
+		return
+	if player != null and player.has_method("load_save_data"):
+		# 构造完整玩家存档结构
+		var player_data: Dictionary = {
+			"position_x": data.get("position_x", 0),
+			"position_y": data.get("position_y", 0),
+			"facing": data.get("facing", 1),
+			"stats": data.get("stats", {}),
+			"cultivation": data.get("cultivation", {}),
+		}
+		player.load_save_data(player_data)

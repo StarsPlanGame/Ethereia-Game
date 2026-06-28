@@ -18,10 +18,9 @@ func save_game(slot_id: int = 1) -> void:
 	}
 	# 聚合各系统数据
 	save_data.merge(GameState.get_save_data())
-	# PlayerStats / PlayerCultivation 需要从玩家节点取（由 GameRoot 注入引用）
-	# 此处通过信号让玩家节点贡献存档数据
+	# 玩家数据：通过 group("player") 查找玩家节点
 	var player_data: Dictionary = _collect_player_save_data()
-	save_data["player"] = player_data.get("player", {})
+	save_data["player"] = player_data.get("stats", {})
 	save_data["cultivation"] = player_data.get("cultivation", {})
 	save_data["inventory"] = InventorySystem.get_save_data()
 	save_data["quests"] = QuestManager.get_save_data()
@@ -69,9 +68,16 @@ func load_game(slot_id: int = 1) -> void:
 	QuestManager.load_save_data(data.get("quests", {}))
 	KarmaManager.load_save_data(data.get("karma", {}))
 	RelationshipManager.load_save_data(data.get("relationships", {}))
-	_gathered_nodes_data = data.get("gathered_nodes", {})
-	_story_triggered_data = data.get("story_triggered", {})
-	# 玩家数据分发由 GameRoot 接收信号后处理
+	_gathered_nodes = data.get("gathered_nodes", {})
+	_story_triggered = data.get("story_triggered", {})
+	# 玩家数据由 GameRoot 监听 game_loaded 信号后分发
+	_pending_player_data = {
+		"stats": data.get("player", {}),
+		"cultivation": data.get("cultivation", {}),
+		"position_x": data.get("position_x", 0),
+		"position_y": data.get("position_y", 0),
+		"facing": data.get("facing", 1),
+	}
 	EventBus.game_loaded.emit(slot_id)
 	print("[SaveManager] 读档成功: %s" % path)
 
@@ -115,10 +121,22 @@ func is_story_triggered(trigger_id: String) -> bool:
 func reset_story_triggered() -> void:
 	_story_triggered.clear()
 
+# ======== 待分发的玩家数据（GameRoot 读档时取用）========
+var _pending_player_data: Dictionary = {}
+
+## GameRoot 在 game_loaded 信号后调用，取出待分发的玩家数据
+func pop_pending_player_data() -> Dictionary:
+	var data: Dictionary = _pending_player_data
+	_pending_player_data = {}
+	return data
+
 # ======== 内部辅助 ========
-## 通过 EventBus 请求玩家节点提供存档数据
-## GameRoot 监听 game_saving 信号并 emit game_save_collected
-## TODO: 接入 GameRoot 实现后完善
+## 通过 group("player") 查找玩家节点并收集存档数据
 func _collect_player_save_data() -> Dictionary:
-	# 暂时返回空，由 GameRoot 在监听到 game_saved 信号前主动注入
-	return {}
+	var tree: SceneTree = get_tree()
+	if tree == null:
+		return {}
+	var player: Node = tree.get_first_node_in_group("player")
+	if player == null or not player.has_method("get_save_data"):
+		return {}
+	return player.get_save_data()

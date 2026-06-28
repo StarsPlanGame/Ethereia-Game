@@ -1,0 +1,86 @@
+[gd_scene load_steps=2 format=3]
+
+[ext_resource type="Script" path="res://scripts/ui/MainMenu.gd" id="1_menu"]
+
+[node name="MainMenu" type="Control"]
+custom_minimum_size = Vector2(1280, 720)
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+mouse_filter = 1
+script = ExtResource("1_menu")
+
+[node name="Background" type="ColorRect" parent="."]
+color = Color(0.05, 0.05, 0.08, 1)
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+mouse_filter = 2
+
+[node name="Panel" type="Panel" parent="."]
+anchors_preset = 8
+anchor_left = 0.3
+anchor_top = 0.15
+anchor_right = 0.7
+anchor_bottom = 0.85
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="Margin" type="MarginContainer" parent="Panel"]
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = 40.0
+offset_top = 40.0
+offset_right = -40.0
+offset_bottom = -40.0
+mouse_filter = 2
+
+[node name="VBox" type="VBoxContainer" parent="Panel/Margin"]
+theme_override_constants/separation = 24
+mouse_filter = 2
+
+[node name="TitleLabel" type="Label" parent="Panel/Margin/VBox"]
+custom_minimum_size = Vector2(0, 60)
+text = "仙冥大陆"
+horizontal_alignment = 1
+mouse_filter = 2
+
+[node name="SubtitleLabel" type="Label" parent="Panel/Margin/VBox"]
+custom_minimum_size = Vector2(0, 30)
+text = "Ethereia"
+horizontal_alignment = 1
+mouse_filter = 2
+
+[node name="Spacer" type="Control" parent="Panel/Margin/VBox"]
+custom_minimum_size = Vector2(0, 20)
+mouse_filter = 2
+
+[node name="NewGameButton" type="Button" parent="Panel/Margin/VBox"]
+custom_minimum_size = Vector2(0, 50)
+text = "新游戏"
+mouse_filter = 0
+
+[node name="ContinueButton" type="Button" parent="Panel/Margin/VBox"]
+custom_minimum_size = Vector2(0, 50)
+text = "继续游戏"
+mouse_filter = 0
+
+[node name="QuitButton" type="Button" parent="Panel/Margin/VBox"]
+custom_minimum_size = Vector2(0, 50)
+text = "退出"
+mouse_filter = 0
+
+[node name="Spacer2" type="Control" parent="Panel/Margin/VBox"]
+custom_minimum_size = Vector2(0, 20)
+mouse_filter = 2
+
+[node name="NotificationLabel" type="Label" parent="Panel/Margin/VBox"]
+custom_minimum_size = Vector2(0, 24)
+text = ""
+horizontal_alignment = 1
+mouse_filter = 2
+
+[connection signal="pressed" from="Panel/Margin/VBox/NewGameButton" to="." method="_on_new_game_pressed"]
+[connection signal="pressed" from="Panel/Margin/VBox/ContinueButton" to="." method="_on_continue_pressed"]
+[connection signal="pressed" from="Panel/Margin/VBox/QuitButton" to="." method="_on_quit_pressed"]
