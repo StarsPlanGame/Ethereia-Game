@@ -1,0 +1,36 @@
+[gd_scene load_steps=2 format=3]
+
+[ext_resource type="Script" path="res://scripts/ui/ItemSlot.gd" id="1_slot"]
+
+[node name="ItemSlot" type="Panel"]
+custom_minimum_size = Vector2(220, 120)
+script = ExtResource("1_slot")
+
+[node name="VBox" type="VBoxContainer" parent="."]
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = 8.0
+offset_top = 6.0
+offset_right = -8.0
+offset_bottom = -6.0
+theme_override_constants/separation = 2
+mouse_filter = 2
+
+[node name="NameLabel" type="Label" parent="VBox"]
+text = "道具名"
+mouse_filter = 2
+
+[node name="CountLabel" type="Label" parent="VBox"]
+text = "× 1"
+mouse_filter = 2
+
+[node name="TypeLabel" type="Label" parent="VBox"]
+text = "材料"
+mouse_filter = 2
+
+[node name="DescLabel" type="Label" parent="VBox"]
+custom_minimum_size = Vector2(0, 40)
+text = "描述"
+autowrap_mode = 2
+mouse_filter = 2

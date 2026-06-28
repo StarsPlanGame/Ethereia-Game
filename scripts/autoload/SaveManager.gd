@@ -93,6 +93,10 @@ func mark_gathered(node_id: String) -> void:
 func is_gathered(node_id: String) -> bool:
 	return _gathered_nodes.get(node_id, false)
 
+## 清空所有采集点记录（仅测试用）
+func reset_gathered() -> void:
+	_gathered_nodes.clear()
+
 # ======== 内部辅助 ========
 ## 通过 EventBus 请求玩家节点提供存档数据
 ## GameRoot 监听 game_saving 信号并 emit game_save_collected

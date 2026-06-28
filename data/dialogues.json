@@ -53,6 +53,81 @@
       }
     ]
   },
+  "dlg_shen_qingluo_quest_active": {
+    "id": "dlg_shen_qingluo_quest_active",
+    "npc_id": "npc_shen_qingluo",
+    "condition": {
+      "type": "quest_state",
+      "quest_id": "quest_001",
+      "state": "active"
+    },
+    "nodes": [
+      {
+        "id": "start",
+        "speaker": "沈青萝",
+        "text": "灵草采到了吗？山林深处阴湿处多有生长，记得采满 3 株再来见我。",
+        "next": "end",
+        "effects": []
+      },
+      {
+        "id": "end",
+        "speaker": "",
+        "text": "",
+        "is_end": true
+      }
+    ]
+  },
+  "dlg_shen_qingluo_quest_deliver": {
+    "id": "dlg_shen_qingluo_quest_deliver",
+    "npc_id": "npc_shen_qingluo",
+    "condition": {
+      "type": "quest_state",
+      "quest_id": "quest_001",
+      "state": "ready_to_complete"
+    },
+    "nodes": [
+      {
+        "id": "start",
+        "speaker": "沈青萝",
+        "text": "灵草采到了，多谢你。这些灵石和丹药收下吧，对你修行有所助益。",
+        "next": "end",
+        "effects": [
+          { "type": "try_complete_quest", "quest_id": "quest_001" },
+          { "type": "remove_item", "id": "item_spirit_grass", "amount": 3 }
+        ]
+      },
+      {
+        "id": "end",
+        "speaker": "",
+        "text": "",
+        "is_end": true
+      }
+    ]
+  },
+  "dlg_shen_qingluo_after_quest": {
+    "id": "dlg_shen_qingluo_after_quest",
+    "npc_id": "npc_shen_qingluo",
+    "condition": {
+      "type": "quest_state",
+      "quest_id": "quest_001",
+      "state": "completed"
+    },
+    "nodes": [
+      {
+        "id": "start",
+        "speaker": "沈青萝",
+        "text": "近来山林妖兽频现，若有闲暇，可去铁匠铺找韩昭业问问，他或许知晓内情。",
+        "next": "end",
+        "effects": []
+      },
+      {
+        "id": "end",
+        "speaker": "",
+        "text": "",
+        "is_end": true
+      }
+    ]
+  },
   "dlg_han_zhaoye_first_meet": {
     "id": "dlg_han_zhaoye_first_meet",
     "npc_id": "npc_han_zhaoye",

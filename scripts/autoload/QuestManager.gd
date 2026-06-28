@@ -110,6 +110,16 @@ func complete_quest(quest_id: String) -> void:
 	EventBus.quest_completed.emit(quest_id)
 	print("[Quest] 任务完成: %s" % quest_id)
 
+## 尝试交付任务（由 NPC 对话调用）
+## 仅当任务处于 READY_TO_COMPLETE 状态时才能完成
+func try_complete_quest(quest_id: String) -> bool:
+	if not _quest_states.has(quest_id):
+		return false
+	if _quest_states[quest_id]["state"] != State.READY_TO_COMPLETE:
+		return false
+	complete_quest(quest_id)
+	return true
+
 # ======== 内部辅助 ========
 func _check_quest_completion(quest_id: String) -> void:
 	var q: Dictionary = DataManager.get_quest(quest_id)
@@ -122,8 +132,8 @@ func _check_quest_completion(quest_id: String) -> void:
 			break
 	if all_done:
 		_quest_states[quest_id]["state"] = State.READY_TO_COMPLETE
-		# TODO: 第一部分简化为自动完成；后续可改为需 NPC 交付
-		complete_quest(quest_id)
+		EventBus.quest_updated.emit(quest_id)
+		print("[Quest] 任务可交付: %s" % quest_id)
 
 func _grant_rewards(quest_id: String) -> void:
 	var q: Dictionary = DataManager.get_quest(quest_id)

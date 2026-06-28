@@ -1,10 +1,14 @@
-[gd_scene load_steps=4 format=3]
+[gd_scene load_steps=5 format=3]
 
 [ext_resource type="Script" path="res://scripts/core/EmptyMap.gd" id="1_map"]
 [ext_resource type="Script" path="res://scripts/interactables/TransferPoint.gd" id="2_tp"]
+[ext_resource type="Script" path="res://scripts/interactables/GatherNode.gd" id="3_gather"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_tp"]
 size = Vector2(40, 80)
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_gather"]
+radius = 30.0
 
 [node name="QingShiForest" type="Node2D"]
 script = ExtResource("1_map")
@@ -20,7 +24,7 @@ offset_left = 540.0
 offset_top = 320.0
 offset_right = 740.0
 offset_bottom = 380.0
-text = "青石山林 (占位)"
+text = "青石山林 (占位 - 山林深处灵草丛生)"
 horizontal_alignment = 1
 vertical_alignment = 1
 
@@ -55,3 +59,41 @@ target_spawn_id = "spawn_from_forest"
 
 [node name="CollisionShape2D2" type="CollisionShape2D" parent="TransferPoints/ToTemple"]
 shape = SubResource("RectangleShape2D_tp")
+
+[node name="GatherNodes" type="Node2D" parent="."]
+
+[node name="SpiritGrass1" type="Area2D" parent="GatherNodes"]
+position = Vector2(400, 300)
+collision_layer = 16
+collision_mask = 1
+script = ExtResource("3_gather")
+item_id = "item_spirit_grass"
+amount = 1
+gather_node_id = "qing_shi_forest_grass_1"
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="GatherNodes/SpiritGrass1"]
+shape = SubResource("CircleShape2D_gather")
+
+[node name="SpiritGrass2" type="Area2D" parent="GatherNodes"]
+position = Vector2(700, 500)
+collision_layer = 16
+collision_mask = 1
+script = ExtResource("3_gather")
+item_id = "item_spirit_grass"
+amount = 1
+gather_node_id = "qing_shi_forest_grass_2"
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="GatherNodes/SpiritGrass2"]
+shape = SubResource("CircleShape2D_gather")
+
+[node name="SpiritGrass3" type="Area2D" parent="GatherNodes"]
+position = Vector2(950, 250)
+collision_layer = 16
+collision_mask = 1
+script = ExtResource("3_gather")
+item_id = "item_spirit_grass"
+amount = 1
+gather_node_id = "qing_shi_forest_grass_3"
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="GatherNodes/SpiritGrass3"]
+shape = SubResource("CircleShape2D_gather")

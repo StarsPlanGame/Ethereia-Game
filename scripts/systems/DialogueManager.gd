@@ -186,6 +186,9 @@ func _apply_effects(effects: Array) -> void:
 				QuestManager.start_quest(effect.get("quest_id", ""))
 			"complete_quest":
 				QuestManager.complete_quest(effect.get("quest_id", ""))
+			"try_complete_quest":
+				# NPC 交付：仅当任务处于可交付状态才完成
+				QuestManager.try_complete_quest(effect.get("quest_id", ""))
 			"add_item":
 				InventorySystem.add_item(effect.get("id", ""), effect.get("amount", 1))
 			"remove_item":
