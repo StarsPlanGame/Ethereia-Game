@@ -105,6 +105,46 @@
       }
     ]
   },
+  "dlg_shen_qingluo_report": {
+    "id": "dlg_shen_qingluo_report",
+    "npc_id": "npc_shen_qingluo",
+    "condition": {
+      "type": "quest_state",
+      "quest_id": "quest_006",
+      "state": "active"
+    },
+    "nodes": [
+      {
+        "id": "start",
+        "speaker": "沈青萝",
+        "text": "你突破了？让我感受一下……果然，炼气一层的气息。恭喜你踏入修行之门。",
+        "next": "report",
+        "effects": []
+      },
+      {
+        "id": "report",
+        "speaker": "玩家",
+        "text": "多亏沈姨赠的冥天玉，我才能感知灵气。山林中的妖患也已平息。",
+        "next": "reward",
+        "effects": []
+      },
+      {
+        "id": "reward",
+        "speaker": "沈青萝",
+        "text": "这是你应得的。这些灵石和丹药助你稳固境界。往后修行之路漫长，望你坚守本心。",
+        "next": "end",
+        "effects": [
+          { "type": "complete_quest", "quest_id": "quest_006" }
+        ]
+      },
+      {
+        "id": "end",
+        "speaker": "",
+        "text": "",
+        "is_end": true
+      }
+    ]
+  },
   "dlg_shen_qingluo_after_quest": {
     "id": "dlg_shen_qingluo_after_quest",
     "npc_id": "npc_shen_qingluo",

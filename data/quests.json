@@ -107,7 +107,7 @@
       { "type": "item", "id": "item_qi_recovery_pill", "amount": 3 },
       { "type": "unlock", "id": "skill_spirit_bullet", "amount": 1 }
     ],
-    "next_quest_id": "",
+    "next_quest_id": "quest_006",
     "story_flags": { "entered_cultivation": true },
     "karma_effects": {},
     "relationship_effects": {},
