@@ -1,0 +1,14 @@
+[gd_scene load_steps=2 format=3]
+
+[ext_resource type="PackedScene" path="res://scenes/enemies/EnemyBase.tscn" id="1_base"]
+
+[node name="Wolf" instance=ExtResource("1_base")]
+enemy_id = "enemy_mountain_wolf"
+
+[node name="Sprite2D" parent="." index="0"]
+modulate = Color(0.7, 0.6, 0.5, 1)
+
+[node name="AI" parent="." index="5"]
+chase_range = 200.0
+attack_range = 30.0
+attack_cooldown = 1.5
