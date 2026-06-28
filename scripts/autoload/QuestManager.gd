@@ -134,6 +134,9 @@ func _check_quest_completion(quest_id: String) -> void:
 		_quest_states[quest_id]["state"] = State.READY_TO_COMPLETE
 		EventBus.quest_updated.emit(quest_id)
 		print("[Quest] 任务可交付: %s" % quest_id)
+		# 自动完成：无 rewards 的探索任务，或数据表标记 auto_complete 的任务
+		if q.get("rewards", []).is_empty() or q.get("auto_complete", false):
+			complete_quest(quest_id)
 
 func _grant_rewards(quest_id: String) -> void:
 	var q: Dictionary = DataManager.get_quest(quest_id)
@@ -151,6 +154,8 @@ func _trigger_next_quest(quest_id: String) -> void:
 	if next_id != "" and _quest_states.has(next_id):
 		if _quest_states[next_id]["state"] == State.LOCKED:
 			_quest_states[next_id]["state"] = State.AVAILABLE
+			# 自动启动下一任务（探索任务链无需回 NPC 接取）
+			start_quest(next_id)
 
 func _apply_quest_side_effects(quest_id: String) -> void:
 	var q: Dictionary = DataManager.get_quest(quest_id)

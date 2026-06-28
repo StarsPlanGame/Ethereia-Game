@@ -1,10 +1,19 @@
-[gd_scene load_steps=4 format=3]
+[gd_scene load_steps=6 format=3]
 
 [ext_resource type="Script" path="res://scripts/core/EmptyMap.gd" id="1_map"]
 [ext_resource type="Script" path="res://scripts/interactables/TransferPoint.gd" id="2_tp"]
+[ext_resource type="Script" path="res://scripts/interactables/StoryTrigger.gd" id="3_story"]
+[ext_resource type="PackedScene" path="res://scenes/enemies/NetherWolf.tscn" id="4_nwolf"]
+[ext_resource type="PackedScene" path="res://scenes/enemies/NetherBeast.tscn" id="5_nbeast"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_tp"]
 size = Vector2(40, 80)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_story"]
+size = Vector2(60, 80)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_auto"]
+size = Vector2(200, 200)
 
 [node name="NetherTemple" type="Node2D"]
 script = ExtResource("1_map")
@@ -16,11 +25,11 @@ offset_bottom = 720.0
 color = Color(0.1, 0.08, 0.14, 1)
 
 [node name="PlaceholderLabel" type="Label" parent="."]
-offset_left = 540.0
-offset_top = 320.0
-offset_right = 740.0
-offset_bottom = 380.0
-text = "冥墟古观 (占位)"
+offset_left = 440.0
+offset_top = 20.0
+offset_right = 840.0
+offset_bottom = 60.0
+text = "冥墟古观 - 古观残垣，冥气流转"
 horizontal_alignment = 1
 vertical_alignment = 1
 
@@ -41,3 +50,44 @@ target_spawn_id = "spawn_from_temple"
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="TransferPoints/ToForest"]
 shape = SubResource("RectangleShape2D_tp")
+
+[node name="StoryTriggers" type="Node2D" parent="."]
+
+[node name="Mural" type="Area2D" parent="StoryTriggers"]
+position = Vector2(400, 200)
+collision_layer = 16
+collision_mask = 1
+script = ExtResource("3_story")
+trigger_id = "nether_temple_mural"
+trigger_type = 0
+dialogue_id = "dlg_nether_temple_mural"
+require_flag = "found_temple"
+prompt_text = "按 E 查看壁画"
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="StoryTriggers/Mural"]
+shape = SubResource("RectangleShape2D_story")
+
+[node name="Altar" type="Area2D" parent="StoryTriggers"]
+position = Vector2(1100, 200)
+collision_layer = 16
+collision_mask = 1
+script = ExtResource("3_story")
+trigger_id = "nether_temple_altar"
+trigger_type = 0
+dialogue_id = "dlg_nether_temple_altar"
+require_flag = "boss_defeated"
+prompt_text = "按 E 查看祭台"
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="StoryTriggers/Altar"]
+shape = SubResource("RectangleShape2D_story")
+
+[node name="Enemies" type="Node2D" parent="."]
+
+[node name="NetherWolf1" parent="Enemies" instance=ExtResource("4_nwolf")]
+position = Vector2(500, 400)
+
+[node name="NetherWolf2" parent="Enemies" instance=ExtResource("4_nwolf")]
+position = Vector2(750, 500)
+
+[node name="NetherBeast" parent="Enemies" instance=ExtResource("5_nbeast")]
+position = Vector2(1050, 450)

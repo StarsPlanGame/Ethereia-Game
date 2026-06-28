@@ -110,6 +110,7 @@
     "next_quest_id": "",
     "story_flags": { "entered_cultivation": true },
     "karma_effects": {},
-    "relationship_effects": {}
+    "relationship_effects": {},
+    "auto_complete": true
   }
 ]

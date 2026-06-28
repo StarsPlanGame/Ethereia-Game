@@ -9,6 +9,7 @@ class_name EnemyBase
 
 # ======== 数据驱动属性（从 enemies.json 加载）========
 @export var enemy_id: String = ""        # 敌人数据 ID
+@export var death_flag: String = ""      # 死亡时设置的剧情标记（Boss 专用）
 var enemy_name: String = ""
 var max_hp: int = 30
 var current_hp: int = 30
@@ -17,6 +18,7 @@ var defense: int = 2
 var move_speed: float = 100.0
 var exp_reward: int = 5
 var is_boss: bool = false
+var complete_quest_on_death: String = ""  # 死亡时自动完成的任务 ID
 
 # ======== 内部状态 ========
 var is_dead: bool = false
@@ -77,6 +79,7 @@ func _load_from_data(id: String) -> void:
 	move_speed = data.get("move_speed", 100)
 	exp_reward = data.get("exp", 5)
 	is_boss = data.get("is_boss", false)
+	complete_quest_on_death = data.get("complete_quest_on_death", "")
 
 # ======== 受击接口 ========
 func take_damage(dmg: int) -> void:
@@ -111,6 +114,12 @@ func die() -> void:
 		drop_component.drop_loot()
 	# 通知任务系统
 	EventBus.enemy_killed.emit(enemy_id)
+	# Boss 死亡设置剧情标记
+	if death_flag != "":
+		GameState.set_story_flag(death_flag, true)
+	# Boss 死亡自动完成任务（如 quest_004）
+	if complete_quest_on_death != "":
+		QuestManager.complete_quest(complete_quest_on_death)
 	# 隐藏 HitBox/HurtBox 避免死后触发
 	if hitbox != null:
 		hitbox.monitoring = false

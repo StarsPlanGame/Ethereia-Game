@@ -89,11 +89,12 @@
       {
         "id": "start",
         "speaker": "沈青萝",
-        "text": "灵草采到了，多谢你。这些灵石和丹药收下吧，对你修行有所助益。",
+        "text": "灵草采到了，多谢你。这些灵石和丹药收下吧，对你修行有所助益。近来山林妖兽频现，你若方便可去山林深处查探一番。",
         "next": "end",
         "effects": [
           { "type": "try_complete_quest", "quest_id": "quest_001" },
-          { "type": "remove_item", "id": "item_spirit_grass", "amount": 3 }
+          { "type": "remove_item", "id": "item_spirit_grass", "amount": 3 },
+          { "type": "start_quest", "quest_id": "quest_002" }
         ]
       },
       {
@@ -161,6 +162,59 @@
         "id": "start",
         "speaker": "李婶",
         "text": "哎呀小客人，需要些什么？杂货铺的东西虽不多，但都是实惠货。",
+        "next": "end",
+        "effects": []
+      },
+      {
+        "id": "end",
+        "speaker": "",
+        "text": "",
+        "is_end": true
+      }
+    ]
+  },
+  "dlg_nether_temple_mural": {
+    "id": "dlg_nether_temple_mural",
+    "npc_id": "",
+    "condition": {
+      "type": "always"
+    },
+    "nodes": [
+      {
+        "id": "start",
+        "speaker": "（壁画）",
+        "text": "壁画斑驳褪色，描绘着一位身着玄袍的修士立于幽冥之中，手持一块玄色玉珏，似在沟通天地。画旁铭文依稀可辨：「冥天玉，通幽冥，感天地，启灵根。」",
+        "next": "end",
+        "effects": [
+          { "type": "set_story_flag", "key": "seen_mural", "value": true }
+        ]
+      },
+      {
+        "id": "end",
+        "speaker": "",
+        "text": "",
+        "is_end": true
+      }
+    ]
+  },
+  "dlg_nether_temple_altar": {
+    "id": "dlg_nether_temple_altar",
+    "npc_id": "",
+    "condition": {
+      "type": "always"
+    },
+    "nodes": [
+      {
+        "id": "start",
+        "speaker": "（祭台）",
+        "text": "祭台上残留着冥气流转的痕迹，似乎曾经供奉着某种神物。冥纹兽已被斩杀，冥气渐渐消散，露出了祭台深处的一丝微光。",
+        "next": "reflect",
+        "effects": []
+      },
+      {
+        "id": "reflect",
+        "speaker": "（内心）",
+        "text": "壁画所载冥天玉...莫非就在此处？冥纹兽既已伏诛，那微光之中或藏有机缘。",
         "next": "end",
         "effects": []
       },

@@ -54,6 +54,7 @@
     "attack_range": 50,
     "attack_cooldown": 2.0,
     "is_boss": true,
+    "complete_quest_on_death": "quest_004",
     "sprite": "res://assets/sprites/enemies/nether_beast.png"
   }
 ]

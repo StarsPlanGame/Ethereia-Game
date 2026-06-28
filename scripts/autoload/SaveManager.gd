@@ -29,6 +29,7 @@ func save_game(slot_id: int = 1) -> void:
 	save_data["karma"] = KarmaManager.get_save_data()
 	save_data["relationships"] = RelationshipManager.get_save_data()
 	save_data["gathered_nodes"] = _gathered_nodes_data
+	save_data["story_triggered"] = _story_triggered_data
 
 	var path: String = SAVE_DIR + (SAVE_FILE_TEMPLATE % slot_id)
 	var file: FileAccess = FileAccess.open(path, FileAccess.WRITE)
@@ -69,6 +70,7 @@ func load_game(slot_id: int = 1) -> void:
 	KarmaManager.load_save_data(data.get("karma", {}))
 	RelationshipManager.load_save_data(data.get("relationships", {}))
 	_gathered_nodes_data = data.get("gathered_nodes", {})
+	_story_triggered_data = data.get("story_triggered", {})
 	# 玩家数据分发由 GameRoot 接收信号后处理
 	EventBus.game_loaded.emit(slot_id)
 	print("[SaveManager] 读档成功: %s" % path)
@@ -96,6 +98,22 @@ func is_gathered(node_id: String) -> bool:
 ## 清空所有采集点记录（仅测试用）
 func reset_gathered() -> void:
 	_gathered_nodes.clear()
+
+# ======== 剧情触发器状态（一次性触发防重复）========
+var _story_triggered: Dictionary = {}
+var _story_triggered_data: Dictionary:
+	get:
+		return _story_triggered
+
+func mark_story_triggered(trigger_id: String) -> void:
+	_story_triggered[trigger_id] = true
+
+func is_story_triggered(trigger_id: String) -> bool:
+	return _story_triggered.get(trigger_id, false)
+
+## 清空所有剧情触发记录（仅测试用）
+func reset_story_triggered() -> void:
+	_story_triggered.clear()
 
 # ======== 内部辅助 ========
 ## 通过 EventBus 请求玩家节点提供存档数据
