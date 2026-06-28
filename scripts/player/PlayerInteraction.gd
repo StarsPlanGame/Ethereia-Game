@@ -52,8 +52,10 @@ func _on_body_exited(body: Node) -> void:
 func _select_nearest() -> void:
 	var new_target: Node = null
 	if not _available_interactables.is_empty():
-		# 简化：取第一个；后续可改为按距离排序
-		new_target = _available_interactables[0]
+		# 按距离排序，取最近
+		var sorted: Array = _available_interactables.duplicate()
+		sorted.sort_custom(_compare_distance)
+		new_target = sorted[0]
 	if new_target == _current_interactable:
 		return
 	# 隐藏旧提示
@@ -63,9 +65,19 @@ func _select_nearest() -> void:
 	# 显示新提示
 	if _current_interactable != null:
 		var prompt_text: String = "按 E 互动"
-		if _current_interactable.get("prompt_text") != null:
+		# 优先用 prompt_text 属性
+		if "prompt_text" in _current_interactable:
 			prompt_text = _current_interactable.prompt_text
 		EventBus.interaction_prompt_shown.emit(prompt_text)
+
+func _compare_distance(a: Node, b: Node) -> bool:
+	var pa: Node2D = a as Node2D
+	var pb: Node2D = b as Node2D
+	if pa == null or pb == null:
+		return false
+	var dist_a: float = pa.global_position.distance_to(parent.global_position)
+	var dist_b: float = pb.global_position.distance_to(parent.global_position)
+	return dist_a < dist_b
 
 func _try_interact() -> void:
 	if _current_interactable == null:

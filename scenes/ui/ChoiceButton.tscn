@@ -1,0 +1,9 @@
+[gd_scene load_steps=2 format=3]
+
+[ext_resource type="Script" path="res://scripts/ui/ChoiceButton.gd" id="1_btn"]
+
+[node name="ChoiceButton" type="Button"]
+custom_minimum_size = Vector2(400, 0)
+text = "选项"
+alignment = 0
+script = ExtResource("1_btn")

@@ -28,6 +28,8 @@ func _ready() -> void:
 	add_to_group("player")
 	# 监听场景切换完成信号，由 SceneLoader 接管玩家位置
 	EventBus.scene_changed.connect(_on_scene_changed)
+	# 对话开始时清除交互目标，避免对话结束后立即再次触发
+	EventBus.dialogue_started.connect(_on_dialogue_started)
 
 func _physics_process(_delta: float) -> void:
 	if is_locked():
@@ -88,6 +90,11 @@ func _on_scene_changed(_scene_id: String) -> void:
 	# 场景切换后重置锁定（避免遗留状态）
 	_move_locks.clear()
 	_lock_count = 0
+
+func _on_dialogue_started(_dialogue_id: String) -> void:
+	# 对话开始时清除交互目标，避免对话结束后立即再次触发同一 NPC
+	if interaction != null and interaction.has_method("clear_targets"):
+		interaction.clear_targets()
 
 # ======== 存档接口 ========
 func get_save_data() -> Dictionary:

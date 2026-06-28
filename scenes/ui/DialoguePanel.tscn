@@ -1,0 +1,68 @@
+[gd_scene load_steps=2 format=3]
+
+[ext_resource type="Script" path="res://scripts/ui/DialoguePanel.gd" id="1_panel"]
+
+[node name="DialoguePanel" type="Control"]
+custom_minimum_size = Vector2(1280, 720)
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+mouse_filter = 1
+script = ExtResource("1_panel")
+
+[node name="DimBackground" type="ColorRect" parent="."]
+modulate = Color(0, 0, 0, 0.3)
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+mouse_filter = 2
+
+[node name="Panel" type="Panel" parent="."]
+anchors_preset = 12
+anchor_top = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_top = -260.0
+offset_left = 40.0
+offset_right = -40.0
+offset_bottom = -20.0
+grow_vertical = 0
+
+[node name="Margin" type="MarginContainer" parent="Panel"]
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = 20.0
+offset_top = 16.0
+offset_right = -20.0
+offset_bottom = -16.0
+mouse_filter = 2
+
+[node name="VBox" type="VBoxContainer" parent="Panel/Margin"]
+theme_override_constants/separation = 8
+mouse_filter = 2
+
+[node name="SpeakerLabel" type="Label" parent="Panel/Margin/VBox"]
+custom_minimum_size = Vector2(0, 28)
+text = "说话者"
+horizontal_alignment = 0
+mouse_filter = 2
+
+[node name="TextLabel" type="RichTextLabel" parent="Panel/Margin/VBox"]
+custom_minimum_size = Vector2(0, 80)
+bbcode_enabled = true
+text = "对话内容"
+fit_content = false
+scroll_active = false
+mouse_filter = 2
+
+[node name="ChoicesContainer" type="VBoxContainer" parent="Panel/Margin/VBox"]
+custom_minimum_size = Vector2(0, 40)
+theme_override_constants/separation = 4
+mouse_filter = 2
+
+[node name="AdvanceHint" type="Label" parent="Panel/Margin/VBox"]
+custom_minimum_size = Vector2(0, 20)
+text = "[ 按 E 或 空格 继续 ]"
+horizontal_alignment = 2
+mouse_filter = 2

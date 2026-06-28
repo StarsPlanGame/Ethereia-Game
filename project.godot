@@ -26,6 +26,7 @@ InventorySystem="*res://scripts/autoload/InventorySystem.gd"
 QuestManager="*res://scripts/autoload/QuestManager.gd"
 KarmaManager="*res://scripts/autoload/KarmaManager.gd"
 RelationshipManager="*res://scripts/autoload/RelationshipManager.gd"
+DialogueManager="*res://scripts/systems/DialogueManager.gd"
 SceneLoader="*res://scripts/autoload/SceneLoader.gd"
 SaveManager="*res://scripts/autoload/SaveManager.gd"
 

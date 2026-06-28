@@ -1,8 +1,9 @@
-[gd_scene load_steps=4 format=3]
+[gd_scene load_steps=6 format=3]
 
 [ext_resource type="Script" path="res://scripts/core/GameRoot.gd" id="1_root"]
 [ext_resource type="PackedScene" path="res://scenes/player/Player.tscn" id="2_player"]
 [ext_resource type="Script" path="res://scripts/ui/UILayer.gd" id="3_ui"]
+[ext_resource type="PackedScene" path="res://scenes/ui/DialoguePanel.tscn" id="4_dlg"]
 
 [node name="GameRoot" type="Node2D"]
 script = ExtResource("1_root")
@@ -65,3 +66,5 @@ offset_bottom = 140.0
 text = ""
 horizontal_alignment = 1
 visible = false
+
+[node name="DialoguePanel" parent="UILayer" instance=ExtResource("4_dlg")]

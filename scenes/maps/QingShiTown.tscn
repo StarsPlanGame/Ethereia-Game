@@ -1,8 +1,9 @@
-[gd_scene load_steps=4 format=3]
+[gd_scene load_steps=6 format=3]
 
 [ext_resource type="Script" path="res://scripts/core/EmptyMap.gd" id="1_map"]
 [ext_resource type="Script" path="res://scripts/interactables/TransferPoint.gd" id="2_tp"]
 [ext_resource type="Script" path="res://scripts/interactables/GatherNode.gd" id="3_gather"]
+[ext_resource type="PackedScene" path="res://scenes/npc/NPC.tscn" id="4_npc"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_tp"]
 size = Vector2(40, 80)
@@ -49,6 +50,24 @@ target_spawn_id = "spawn_from_town"
 [node name="CollisionShape2D" type="CollisionShape2D" parent="TransferPoints/ToForest"]
 shape = SubResource("RectangleShape2D_tp")
 
+[node name="NPCs" type="Node2D" parent="."]
+
+[node name="ShenQingluo" parent="NPCs" instance=ExtResource("4_npc")]
+position = Vector2(400, 300)
+npc_id = "npc_shen_qingluo"
+prompt_text = "按 E 与沈青萝对话"
+
+[node name="HanZhaoye" parent="NPCs" instance=ExtResource("4_npc")]
+position = Vector2(800, 250)
+npc_id = "npc_han_zhaoye"
+prompt_text = "按 E 与韩昭业对话"
+facing_left = true
+
+[node name="LiShen" parent="NPCs" instance=ExtResource("4_npc")]
+position = Vector2(900, 500)
+npc_id = "npc_li_shen"
+prompt_text = "按 E 与李婶对话"
+
 [node name="GatherNodes" type="Node2D" parent="."]
 
 [node name="SpiritGrass1" type="Area2D" parent="GatherNodes"]
@@ -64,7 +83,7 @@ gather_node_id = "qing_shi_town_grass_1"
 shape = SubResource("CircleShape2D_gather")
 
 [node name="SpiritGrass2" type="Area2D" parent="GatherNodes"]
-position = Vector2(880, 500)
+position = Vector2(880, 600)
 collision_layer = 16
 collision_mask = 1
 script = ExtResource("3_gather")

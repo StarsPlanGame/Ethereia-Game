@@ -43,7 +43,7 @@ script = ExtResource("5_cult")
 
 [node name="InteractionArea" type="Area2D" parent="."]
 collision_layer = 0
-collision_mask = 16
+collision_mask = 20
 
 [node name="InteractionShape" type="CollisionShape2D" parent="InteractionArea"]
 shape = SubResource("CircleShape2D_interact")
